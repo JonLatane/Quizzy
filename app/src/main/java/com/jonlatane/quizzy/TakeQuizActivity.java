@@ -29,6 +29,7 @@ import com.jonlatane.quizzy.model.QuizInstance;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Timer;
 
 public class TakeQuizActivity extends AppCompatActivity {
     public static final String TAG = "TakeQuizActivity";
@@ -48,6 +49,7 @@ public class TakeQuizActivity extends AppCompatActivity {
     /**
      * The {@link ViewPager} that will host the section contents.
      */
+    private CountDownTimer timer;
     private ViewPager mViewPager;
     private EnrolledQuiz enrolledQuiz;
     private QuizInstance quizInstance;
@@ -84,6 +86,12 @@ public class TakeQuizActivity extends AppCompatActivity {
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.setupWithViewPager(mViewPager);
 
+        //Start the countdown timer
+        final TextView countdown = (TextView)findViewById(R.id.countdown);
+        long timeRemaining = quizInstance.getStartTime().getMillis()
+                                + (TIME_LIMIT_SECONDS * 1000L)
+                                - System.currentTimeMillis();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,18 +100,13 @@ public class TakeQuizActivity extends AppCompatActivity {
                         .setAction(R.string.confirm_done_yes, new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+                                timer.cancel();
                                 finishAndOpenReview();
                             }
                         }).show();
             }
         });
-
-        //Start the countdown timer
-        final TextView countdown = (TextView)findViewById(R.id.countdown);
-        long timeRemaining = quizInstance.getStartTime().getMillis()
-                                + (TIME_LIMIT_SECONDS * 1000L)
-                                - System.currentTimeMillis();
-        new CountDownTimer(timeRemaining, 1000) {
+        timer = new CountDownTimer(timeRemaining, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 countdown.setText(millisUntilFinished / 1000 + "s");
@@ -112,7 +115,8 @@ public class TakeQuizActivity extends AppCompatActivity {
             public void onFinish() {
                 finishAndOpenReview();
             }
-        }.start();
+        };
+        timer.start();
 
     }
 
@@ -153,6 +157,7 @@ public class TakeQuizActivity extends AppCompatActivity {
     }
 
     protected void finishAndOpenReview() {
+        timer.cancel();
         saveQuiz();
         Intent intent = new Intent(this, QuizInfoActivity.class);
         intent.putExtra(QuizSelectionActivity.EXTRA_QUIZ_ID, enrolledQuiz.getQuizId());
