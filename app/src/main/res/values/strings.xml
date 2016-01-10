@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Quizzy</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="hint_add_quiz">Add a quiz to get started!</string>
+    <string name="quiz_url">Quiz URL</string>
+    <string name="default_quiz_url">https://docs.google.com/document/u/0/export?format=txt&amp;id=1MV7GHAvv4tgj98Hj6B_WZdeeEu7CRf1GwOfISjP4GT0</string>
+    <string name="new_quiz">New Quiz</string>
+    <string name="take_quiz">Take Quiz</string>
+    <string name="review_results">Review Results</string>
+
+    <string name="err_quiz_url_invalid">Quiz URL is invalid.</string>
+    <string name="err_quiz_url_empty">Quiz URL is empty.</string>
+    <string name="err_loading_quiz">Failed to load the quiz from the provided URL.</string>
+    <string name="err_connection_timeout">The connection timed out.</string>
+    <string name="title_activity_take_quiz">TakeQuizActivity</string>
+
+    <string name="question_tab_title">Question %1$d</string>
+
+    <string name="info_summary">Summary</string>
+    <string name="info_last_attempt">last attempt</string>
+    <string name="info_average">average score</string>
+    <string name="info_total_attempts">attempts made</string>
+
+    <string name="confirm_done">Are you sure you\'re done?</string>
+    <string name="confirm_done_yes">I\'m done!</string>
+    <string name="confirm_delete">Really delete this quiz?</string>
+    <string name="confirm_delete_yes">Yup</string>
+</resources>

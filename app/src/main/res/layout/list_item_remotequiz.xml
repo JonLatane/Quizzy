@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="quizCard"
+            type="com.jonlatane.quizzy.viewmodel.QuizCardViewModel" />
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="2dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:animateLayoutChanges="true">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:gravity="center_vertical"
+                android:text="@{quizCard.title}"
+                android:textSize="28sp"
+                android:textStyle="bold"/>
+
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_delete_grey_600_18dp"
+                android:onClick="@{quizCard.deleteQuiz}"
+                />
+
+            <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+                android:id="@+id/cardProgress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title"
+                android:indeterminate="true"
+                style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"
+                app:mpb_progressStyle="horizontal"
+                android:visibility="@{quizCard.loading ? android.view.View.VISIBLE : android.view.View.GONE}"/>
+
+            <EditText
+                android:id="@+id/url"
+                android:inputType="textUri"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cardProgress"
+                android:imeOptions="actionDone"
+                android:text="@{quizCard.url}"
+                android:textSize="12sp"
+                android:hint="@string/quiz_url"
+                app:error="@{quizCard.urlError}"
+                app:addTextChangedListener="@{quizCard.urlWatcher}"
+                android:onEditorAction="@{quizCard.onUrlEditorAction}"
+                android:onFocusChange="@{quizCard.onUrlFocusChange}"/>
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/url"
+                android:orientation="horizontal">
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/take_quiz"
+                    android:src="@android:drawable/ic_media_play"
+                    android:visibility="@{quizCard.takeable ? android.view.View.VISIBLE : android.view.View.GONE}"
+                    android:onClick="@{quizCard.takeQuiz}"
+                    />
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/review_results"
+                    android:src="@android:drawable/ic_dialog_info"
+                    android:visibility="@{quizCard.reviewable ? android.view.View.VISIBLE : android.view.View.GONE}"
+                    android:onClick="@{quizCard.reviewQuiz}"/>
+            </android.support.v7.widget.LinearLayoutCompat>
+
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</layout>
