@@ -31,8 +31,6 @@
         android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:clipToPadding="false"/>
 
@@ -43,5 +41,5 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
             app:borderWidth="0dp"
-            android:src="@drawable/ic_add_white_18dp"/>
+            android:src="@drawable/ic_note_add_white_18dp"/>
 </android.support.design.widget.CoordinatorLayout>

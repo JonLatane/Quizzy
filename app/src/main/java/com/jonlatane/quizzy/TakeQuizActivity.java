@@ -29,7 +29,6 @@ import com.jonlatane.quizzy.model.QuizInstance;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Timer;
 
 public class TakeQuizActivity extends AppCompatActivity {
     public static final String TAG = "TakeQuizActivity";
@@ -50,6 +49,7 @@ public class TakeQuizActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private CountDownTimer timer;
+    private boolean hasFinished = false;
     private ViewPager mViewPager;
     private EnrolledQuiz enrolledQuiz;
     private QuizInstance quizInstance;
@@ -100,7 +100,6 @@ public class TakeQuizActivity extends AppCompatActivity {
                         .setAction(R.string.confirm_done_yes, new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                timer.cancel();
                                 finishAndOpenReview();
                             }
                         }).show();
@@ -113,7 +112,9 @@ public class TakeQuizActivity extends AppCompatActivity {
             }
 
             public void onFinish() {
-                finishAndOpenReview();
+                if(!hasFinished) {
+                    finishAndOpenReview();
+                }
             }
         };
         timer.start();
@@ -157,6 +158,7 @@ public class TakeQuizActivity extends AppCompatActivity {
     }
 
     protected void finishAndOpenReview() {
+        hasFinished = true;
         timer.cancel();
         saveQuiz();
         Intent intent = new Intent(this, QuizInfoActivity.class);
